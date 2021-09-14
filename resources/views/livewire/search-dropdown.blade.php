@@ -29,18 +29,46 @@
                 <ul>
                     @foreach ($searchResults as $result)
                         <li class="border-b border-gray-700">
-                            <a href="{{ route('movies.show', $result['id']) }}" class="block
-                            hover:bg-gray-700 px-3 py-3 flex items-center"
+                            <a href="
+                                @if ($result['media_type'] == 'movie')
+                                    {{ route('movies.show', $result['id']) }}
+                                @elseif ($result['media_type'] == 'tv')
+                                    {{ route('tv.show', $result['id']) }}
+                                @elseif ($result['media_type'] == 'person')
+                                    {{ route('actors.show', $result['id']) }}
+                                @endif" 
+                            class="block hover:bg-gray-700 px-3 py-3 flex items-center"
                             @if ($loop->last)
                                 @keydown.tab="isOpen = false"
                             @endif>
-                            @if ($result['poster_path'])
+
+                            @if ($result['media_type'] == 'movie' || $result['media_type'] == 'tv')
+                                @if ($result['poster_path'])
                                 <img src="https://image.tmdb.org/t/p/w92/{{ $result['poster_path'] }}" 
                                 alt="poster" class="w-8">
-                            @else
-                                <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                @else
+                                    <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                @endif
                             @endif
-                            <span class="ml-4">{{ $result['title'] }}</span>
+
+                            @if ($result['media_type'] == 'person')
+                                @if ($result['profile_path'])
+                                <img src="https://image.tmdb.org/t/p/w92/{{ $result['profile_path'] }}" 
+                                alt="poster" class="w-8">
+                                @else
+                                    <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                @endif
+                            @endif
+                            
+                            <span class="ml-4">
+                                @if ($result['media_type'] == 'movie')
+                                    {{ $result['title'] }}
+                                @elseif ($result['media_type'] == 'tv')
+                                    {{ $result['name'] }}
+                                @elseif ($result['media_type'] == 'person')
+                                    {{ $result['name'] }}
+                                @endif
+                            </span>
                         </a>
                         </li>
                     @endforeach
