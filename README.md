@@ -1,6 +1,6 @@
 ## Laravel Movie App
 
-A simple Laravel Movie App uses [the movie database API](https://www.themoviedb.org/) that helps user to discover movies. show popular movies, now playing movies, popular tv shows, top rated shows and actors.
+A simple Laravel Movie App uses [the movie database API](https://www.themoviedb.org/) that helps user to discover movies. 
 <br></br>
 
 ## Screenshots
